@@ -8,14 +8,19 @@
  * @author ASUS
  */
 // Subclase Multimedia
-class Multimedia extends MaterialBibliografico {
+ class Multimedia extends MaterialBibliografico {
     private String formato;
-
     public Multimedia(String titulo, String autor, String formato) {
         super(titulo, autor);
         this.formato = formato;
     }
-
+    public String getFormato() {
+        return formato;
+    }
+    public void setFormato(String formato) {
+        this.formato = formato;
+    }
+    
     @Override
     public void mostrarInfo() {
         System.out.println("Título: " + titulo);

@@ -8,14 +8,19 @@
  * @author ASUS
  */
 // Subclase Libro
-class Libro extends MaterialBibliografico {
+ class Libro extends MaterialBibliografico {
     private int paginas;
-
     public Libro(String titulo, String autor, int paginas) {
         super(titulo, autor);
         this.paginas = paginas;
     }
-
+    public int getPaginas() {
+        return paginas;
+    }
+    public void setPaginas(int paginas) {
+        this.paginas = paginas;
+    }
+    
     @Override
     public void mostrarInfo() {
         System.out.println("Título: " + titulo);

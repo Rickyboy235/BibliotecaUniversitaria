@@ -8,7 +8,7 @@
  * @author ASUS
  */
 // Clase Prestamo
-class Prestamo {
+public class Prestamo {
     private Usuario usuario;
     private MaterialBibliografico material;
 
@@ -18,7 +18,7 @@ class Prestamo {
     }
 
     public void mostrarDetalle() {
-        System.out.println("\nDetalles del préstamo:");
+        System.out.println("Detalles del préstamo:");
         usuario.mostrarInfo();
         material.mostrarInfo();
     }
