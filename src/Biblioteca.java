@@ -138,6 +138,48 @@ public class Biblioteca {
         Usuario user1 = new Usuario("Marco", "U0002");
         rm.verRecomendacionUsuario(user1);
         rm1.marcarComoVisto();
-   }
+        
+        System.out.println("\n--------------------------------------------------------------");
+        
+        RegistroVisitas visita= new RegistroVisitas(1, "2025-06-24");
+        visita.agregarObservacion("El usuario llegó puntualmente.");
+        visita.agregarObservacion("Solicitó apoyo para encontrar un libro.");
+        
+        visita.agregarActividad("Lectura de libros de consulta");
+        visita.agregarActividad("Uso de la computadora para busqueda de informacion.");
+        
+        System.out.println("Registro de Visita Numero: " + visita.getNumeroVisita() + "\nFecha: " + visita.getFecha());
+        System.out.println("\nObservaciones:");
+        for (String obs : visita.getObservacion()){
+            System.out.println("- " + obs);
+        }
+        
+        System.out.println("\nActividades Realizadas:");
+        for (String act : visita.getActividadesRealizadas()) {
+            System.out.println("- " + act);
+        }
+        
+        System.out.println("\n--------------------------------------------------------------");
+        EncuestaBiblioteca encuesta = new EncuestaBiblioteca("Satisfaccion general");
+        
+        encuesta.agregarRespuesta(3);
+        encuesta.agregarRespuesta(4);
+        encuesta.agregarRespuesta(5);
+        encuesta.agregarRespuesta(4);
+        encuesta.agregarRespuesta(3);
+        encuesta.agregarRespuesta(5);
+        encuesta.agregarRespuesta(5);
+        
+        encuesta.mostrarResumen();
+        
+         System.out.println("\n--------------------------------------------------------------");
+         
+         RegistroSala<String, String> registro1 = new RegistroSala<>("Carlos Mamani", "Usó sala grupal por 2 horas");
+         RegistroSala<Integer, String> registro2 = new RegistroSala<>(20231234, "Uso la sala de estudio individual por 1 hora");
+         
+         System.out.println("Nombre: " + registro1.getEstudiante() + "\nDetalle: " + registro1.getUsoDetalle());
+         System.out.println("\n");
+         System.out.println("Codigo: " + registro2.getEstudiante() + "\nDetalle: " + registro2.getUsoDetalle());       
+    }
 }
 
