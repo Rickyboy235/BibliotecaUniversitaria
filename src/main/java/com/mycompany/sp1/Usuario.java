@@ -85,4 +85,7 @@ public class Usuario {
         boolean estPrest = false;
         return estPrest;
     }
+    //public void MostrarUsuarios(JTable tablaUsuarios){
+        
+    //}
 }
