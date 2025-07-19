@@ -2,41 +2,57 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
+import java.sql.*;
 /**
  *
  * @author ASUS
  */
 public class Reserva {
-    private String codigoReserva;
-    private String fecha;
-    private String hora;
-    public Reserva(String codigoReserva, String fecha, String hora) {
-        this.codigoReserva = codigoReserva;
+    protected String codReserva;
+    protected String fecha;
+    protected String horaInicio;
+    protected String horaFin;
+
+    public Reserva(String fecha, String horaInicio, String horaFin) {
         this.fecha = fecha;
-        this.hora = hora;       
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+        this.codReserva = generarCodigo(); // Ahora será como R001, R002...
     }
-    public String getCodigoReserva() {
-        return codigoReserva;
+
+    private String generarCodigo() {
+        String nuevoCodigo = "R001"; // valor por defecto
+        String url = "jdbc:sqlite:reserva.db";
+
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS total FROM Reserva")) {
+
+            if (rs.next()) {
+                int total = rs.getInt("total") + 1;
+                nuevoCodigo = String.format("R%03d", total);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al generar código: " + e.getMessage());
+        }
+
+        return nuevoCodigo;
     }
-    public void setCodigoReserva(String codigoReserva) {
-        this.codigoReserva = codigoReserva;
+
+    public String getCodReserva() {
+        return codReserva;
     }
+
     public String getFecha() {
         return fecha;
     }
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+
+    public String getHoraInicio() {
+        return horaInicio;
     }
-    public String getHora() {
-        return hora;
+
+    public String getHoraFin() {
+        return horaFin;
     }
-    public void setHora(String hora) {
-        this.hora = hora;
-    }
-    public void mostrarInfo() {
-        System.out.println("CodigoReserva: " + codigoReserva);
-        System.out.println("Fecha: " + fecha);
-        System.out.println("Hora: " + hora);
-    }   
 }
