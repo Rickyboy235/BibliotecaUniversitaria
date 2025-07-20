@@ -15,7 +15,11 @@ import java.util.Scanner;
  * @author ATKZ
  */
 public class LoginAdmin extends Login{
+    private Connection conn;
 
+    public LoginAdmin(Connection conn) {
+        this.conn = conn;
+    }
     public LoginAdmin() {
     }
 

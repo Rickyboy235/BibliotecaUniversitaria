@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
  *
  * @author ATKZ
  */
+/*
 public class CConexion {
     Connection conectar = null;
     
@@ -39,6 +40,36 @@ public class CConexion {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"NO se cerro correctamente, error: " + e.toString());
+        }
+    }
+}
+*/public class CConexion {
+    private Connection conectar = null;
+
+    private final String db = "BibliotecaUtp.db";
+    private final String cadena = "jdbc:sqlite:" + System.getProperty("user.dir") + "/" + db;
+
+    public Connection establecerConexion() {
+        try {
+            if (conectar == null || conectar.isClosed()) { // ✅ solo abre si está cerrada
+                Class.forName("org.sqlite.JDBC");
+                conectar = DriverManager.getConnection(cadena);
+                System.out.println("✅ Conexión establecida.");
+            }
+        } catch (Exception e) {
+            System.out.println("❌ Error al conectar: " + e.getMessage());
+        }
+        return conectar;
+    }
+
+    public void cerrarConexion() {
+        try {
+            if (conectar != null && !conectar.isClosed()) {
+                conectar.close();
+                System.out.println("✅ Conexión cerrada.");
+            }
+        } catch (Exception e) {
+            System.out.println("❌ Error al cerrar conexión: " + e.getMessage());
         }
     }
 }

@@ -15,12 +15,26 @@ import java.util.Scanner;
  * @author ATKZ
  */
 public class LoginUsuario extends Login {
+    private Connection conn;
 
+    public LoginUsuario(Connection conn) {
+        this.conn = conn;
+    }
+    
+    
     public LoginUsuario() {
     }
 
     public LoginUsuario(String codigo, String contraseña, CConexion conexion, Connection conn, Scanner teclado) {
         super(codigo, contraseña, conexion, conn, teclado);
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
           
     
@@ -28,6 +42,7 @@ public class LoginUsuario extends Login {
     public String ingresarCodigo(){        
         System.out.print("USUARIO: ");
         super.codigo = teclado.nextLine();
+        setCodigo(codigo);
         return codigo;
     }
     @Override
@@ -64,7 +79,7 @@ public class LoginUsuario extends Login {
    
     public void mostrarNombreAlSes(){
         try {            
-            String sql = "SELECT a.nomAlPre, a.apePatAlPre FROM Usuario u LEFT JOIN AlumnoPregrado a ON"
+            String sql = "SELECT u.codUsuario, a.nomAlPre, a.apePatAlPre FROM Usuario u LEFT JOIN AlumnoPregrado a ON"
                 + " u.codUsuario = a.codAlPre LEFT JOIN AlumnoPostgrado p ON u.codUsuario = "
                     + "p.codAlPos  WHERE u.codUsuario = ? AND u.contraseña = ?";
             PreparedStatement ps = conn.prepareStatement(sql);

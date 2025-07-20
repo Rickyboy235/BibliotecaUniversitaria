@@ -4,6 +4,9 @@
  */
 package Menus;
 
+import Credenciales.LoginAdmin;
+import InsercionSql.InsersionMaterial;
+import java.sql.Connection;
 import java.util.Scanner;
 
 /**
@@ -13,6 +16,13 @@ import java.util.Scanner;
 public class menuAdmin {
     private int eleccion;
     private int elecSM;
+    private LoginAdmin logAd;
+    private Connection conn;
+
+    public menuAdmin(Connection conn, LoginAdmin logAd) {
+        this.conn = conn;
+        this.logAd = logAd;
+    }
     Scanner teclado = new Scanner(System.in);
 
     public menuAdmin() {
@@ -41,9 +51,11 @@ public void mostrarMenuPrincipal(){
         } while (eleccion != 1 && eleccion != 0);
         switch (eleccion) {
             case 1 ->{
+                InsersionMaterial inma = new InsersionMaterial(conn);
                 boolean banderaCatalogo = true;
                 while(banderaCatalogo) {
-                    //
+                    System.out.println("inserte material");
+                    inma.insertarMaterial();
                 }
             }
             case 2 ->{

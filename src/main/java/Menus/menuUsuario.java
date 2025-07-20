@@ -4,28 +4,44 @@
  */
 package Menus;
 
+import Credenciales.LoginUsuario;
+import InsercionSql.InsercionSolicitud;
 import VisualizacionSql.VisualizarMaterial;
 import VisualizacionSql.VisualizarUsuario;
 import com.mycompany.sp1.AudioLibro;
 import com.mycompany.sp1.DispositivoElectronico;
 import com.mycompany.sp1.Libro;
 import com.mycompany.sp1.Revista;
+import com.mycompany.sp1.Solicitud;
 import com.mycompany.sp1.Tesis;
 import com.mycompany.sp1.Video;
+import java.sql.Connection;
 import java.util.Scanner;
 
-/**
- *
- * @author ATKZ
- */
+
 public class menuUsuario {
- 
+    
+    private LoginUsuario usuario;
     private int eleccion;
     private int elecMaterial;
+    private Connection conn;
+    
+    
+    public menuUsuario(Connection conn, LoginUsuario usuario) {
+        this.conn = conn;
+        this.usuario = usuario;
+    }
     Scanner teclado = new Scanner(System.in);
+
     public menuUsuario() {
     }
 
+    public menuUsuario(int eleccion, int elecMaterial) {
+        this.eleccion = eleccion;
+        this.elecMaterial = elecMaterial;
+    }
+    
+    
     public void menuUser(){
         boolean banderaPrincipal = true;
         while(banderaPrincipal){
@@ -98,12 +114,25 @@ public class menuUsuario {
                 }
             }
             case 2->{
-                int eleccionSolicitud ;
+                int eleccionSolicitud;
                 realizarSolicitud();
-                eleccionSolicitud = teclado.nextInt();
-                //SE INSERTARA UNA REGISTRO EL LA TABLA SOLICITUDES PARA 
-                //POSTERIORMENTE PASAR A EVALUACION POR PARTE DEL PERSONAL
-                
+                eleccionSolicitud = teclado.nextInt();                                
+                InsercionSolicitud isol = new InsercionSolicitud(conn);                                
+                        isol.insertarSolicitud(usuario);
+                /*switch (eleccionSolicitud){
+                    case 1 ->{
+                        System.out.println("""
+                                           ingrese el tipo de material que desee prestarse
+                                           1. Libro
+                                           2. Revista
+                                           3. Tesis
+                                           4. Video
+                                           5. AudioLibro
+                                           """);
+                        int eleccionMaterial = teclado.nextInt();
+                        
+                    }
+                }*/
             }
             case 3->{
                 //SE MOSTRARAN SU HISTORIAL DE SOLICITUDES EN LA BIBLIOTECA EN RELACION
@@ -154,10 +183,6 @@ public class menuUsuario {
                            Realizar Prestamo.
                            Ingrese el nombre del material""");
         String nombre = teclado.nextLine();
-    }
-    //podria mostrar una lista de los resultados de la busqueda
-    //y tambien se podria seleccionar cual de estas desea usar para el prestamo
-    
-    
+    }     
     
 }
