@@ -6,108 +6,40 @@ package Credenciales;
 
 import conexion.CConexion;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Scanner;
 
 /**
  *
  * @author ATKZ
  */
-public class Login {
-    CConexion conexion = new CConexion();
-    Connection conn = conexion.establecerConexion();
-    public void insertarCredenciales(){
-        Scanner teclado = new Scanner(System.in);
-        System.out.print("USUARIO: ");
-        String usuario = teclado.nextLine();
-        System.out.println("CONTRASEÑA: ");
-        String contraseña = teclado.nextLine();
+abstract class Login {
+    protected String codigo;
+    protected String contraseña;
+    protected CConexion conexion;
+    protected Connection conn;
+    protected Scanner teclado;
+    protected boolean estado;
+    
+    public Login() {
+        this.teclado = new Scanner(System.in);
+        this.conexion = new CConexion();
+        this.conn  = conexion.establecerConexion();
     }
-    public boolean verificarCredencialesAlumno(String usuario,String contraseña){
+
+    public Login(String codigo, String contraseña, CConexion conexion, Connection conn, Scanner teclado) {
+        this.codigo = codigo;
+        this.contraseña = contraseña;
+        this.conexion = new CConexion();
+        this.conn = conexion.establecerConexion();
+        this.teclado = teclado; 
+        this.estado = false;
+    }
+    
+    
        
-        
-        
-        try {
-            String sql = "SELECT * FROM Usuario WHERE codUsuario = ? AND contraseña = ?";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, usuario);
-            ps.setString(2, contraseña);
-            ResultSet rs = ps.executeQuery();
-            
-            if (rs.next()) {
-                System.out.println("Inicio de sesion: " + rs.getString("tipoUsuario"));
-                return true;
-            }else{
-                System.out.println("Codigo o contraseña incorrecta.");
-                return false;
-            }
-        } catch (Exception e) {
-            System.out.println("error login: " + e.getMessage());
-            return false;
-        } finally{
-            conexion.cerrarConexion();
-        }
-    }
-    public boolean verificarCredencalesDocente(String usuario, String contraseña){
-        try {
-            String sql = "SELECT * FROM Usuario WHERE codUsuario = ? AND contraseña = ? AND tipoUsuario = 'Docente'";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, usuario);
-            ps.setString(2, contraseña);
-            ResultSet rs = ps.executeQuery();
-            
-            if (rs.next()) {
-                System.out.println("Inicio de sesion: " + rs.getString("tipoUsuario"));
-                return true;
-            }else{
-                System.out.println("Codigo o contraseña incorrecta.");
-                return false;
-            }
-        } catch (Exception e) {
-            System.out.println("error login: " + e.getMessage());
-            return false;
-        } finally{
-            conexion.cerrarConexion();
-        }
-    }
-    public void mostrarNombreAlSes(String usuario, String contraseña){
-        try {            
-            String sql = "SELECT a.nomAlPre FROM Usuario u LEFT JOIN AlumnoPregrado a ON"
-                + " u.codUsuario = a.codAlPre LEFT JOIN AlumnoPostgrado p ON u.codUsuario = "
-                    + "p.codAlPos  WHERE u.codUsuario = ? AND u.contraseña = ?";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, usuario);
-            ps.setString(2, contraseña);
-            ResultSet rs = ps.executeQuery();
-            
-            if (rs.next()) {                
-                String nombre = rs.getString("nomAlPre");
-                System.out.println("bienvenido: " + nombre);
-            }else{
-                System.out.println("error mostrar nombre");
-            }
-        } catch (Exception e) {
-            System.out.println("error mostrar: " + e.getMessage());
-        }   
-    }
-    public void mostrarNombreDocSes(String usuario, String contraseña){
-        try {            
-            String sql = "SELECT d.nomDoc FROM Usuario u LEFT JOIN Docente d ON"
-                + " u.codUsuario = d.codDoc WHERE u.codUsuario = ? AND u.contraseña = ?";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, usuario);
-            ps.setString(2, contraseña);
-            ResultSet rs = ps.executeQuery();
-            
-            if (rs.next()) {                
-                String nombre = rs.getString("nomDoc");
-                System.out.println("bienvenido: " + nombre);
-            }else{
-                System.out.println("error mostrar nombre");
-            }
-        } catch (Exception e) {
-            System.out.println("error mostrar: " + e.getMessage());
-        }
-    }
+    public abstract String ingresarCodigo();
+    public abstract String ingresarContraseña();
+    public abstract boolean verificarCredenciales();
+    public abstract void mostrarDatosLogin();
+    
 }

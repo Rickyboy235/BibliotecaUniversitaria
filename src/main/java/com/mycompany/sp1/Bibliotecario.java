@@ -8,7 +8,7 @@ package com.mycompany.sp1;
  *
  * @author USER
  */
-public class Bibliotecario implements Personal{
+public class Bibliotecario {
     private String codigo;
     private String nombre;
     private String apellido;
@@ -79,19 +79,16 @@ public class Bibliotecario implements Personal{
     
      
 
-    @Override
     public void gestionarPedido() {
         System.out.println("lista de pedido pendientes");
         
     }
 
-    @Override
     public String mostrarInfo() {
         return "\nCodigo: " + codigo + "\nNombre: " + nombre + "\nApellido: " + apellido + 
                 "\nDNI: " + correo + "\nTelefono: " + telefono;
     }
 
-    @Override
     public boolean rechazarPedido() {
         return false;
     }

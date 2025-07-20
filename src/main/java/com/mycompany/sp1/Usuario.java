@@ -4,26 +4,40 @@
  */
 package com.mycompany.sp1;
 
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 /**
  *
  * @author USER
  */
-public class Usuario {
-    private String codigo;
-    private String nombre;
-    private String apellido;
-    private String Ntelefono;
-    private String correo;
-    private String dni;
+abstract class Usuario {
+    /**
+     * CLASE QUE SOLO SIRVE PARA MOSTRAR DATOS
+     * POR EL MOMENTO
+     */
+    protected String codigo;
+    protected String contraseña;
+    protected String nombre;
+    protected String apellPat;
+    protected String apellMat;
+    protected String Ntelefono;
+    protected String correo;
+    protected String dni;
+    protected String tipoUsuario;
 
-    public Usuario(String codigo, String nombre, String apellido, String Ntelefono, String correo, String dni) {
+    public Usuario(String codigo, String tipoUsuario, String nombre, String apellPat, String apellMat, String Ntelefono, String correo, String dni) {
         this.codigo = codigo;
         this.nombre = nombre;
-        this.apellido = apellido;
+        this.apellPat = apellPat;
+        this.apellMat = apellMat;
         this.Ntelefono = Ntelefono;
         this.correo = correo;
         this.dni = dni;
+        this.tipoUsuario = tipoUsuario;
     }
+    //TALVES NO SE DEBA CREAR CUENTAS PERO SI SE PUEDE MODIFICAR CONTRASEAS
 
     public String getCodigo() {
         return codigo;
@@ -33,6 +47,14 @@ public class Usuario {
         this.codigo = codigo;
     }
 
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -41,13 +63,22 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getApellPat() {
+        return apellPat;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setApellPat(String apellPat) {
+        this.apellPat = apellPat;
     }
+
+    public String getApellMat() {
+        return apellMat;
+    }
+
+    public void setApellMat(String apellMat) {
+        this.apellMat = apellMat;
+    }
+
 
     public String getNtelefono() {
         return Ntelefono;
@@ -73,19 +104,9 @@ public class Usuario {
         this.dni = dni;
     }
     
-    public String mostrarDatosUsuario(){
-        return codigo + nombre + apellido + dni 
-                + Ntelefono; 
-    }
-    public String solicitarPrestamo(){
-        return codigo + nombre + apellido;
-    }
+
+
     
-    public boolean cancelarPrestamo(){
-        boolean estPrest = false;
-        return estPrest;
-    }
-    //public void MostrarUsuarios(JTable tablaUsuarios){
-        
-    //}
+    abstract void mostrarDatos();
+    //abstract void mostrarRelacion();
 }

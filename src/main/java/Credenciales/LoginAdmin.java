@@ -8,21 +8,41 @@ import conexion.CConexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Scanner;
 
 /**
  *
  * @author ATKZ
  */
-public class LoginAdmin {
-     CConexion conexion = new CConexion();
-            Connection conn = conexion.establecerConexion();
-            
-    public boolean verificarAdmin(String usuario,String contraseña){
+public class LoginAdmin extends Login{
+
+    public LoginAdmin() {
+    }
+
+    public LoginAdmin(String codigo, String contraseña, CConexion conexion, Connection conn, Scanner teclado) {
+        super(codigo, contraseña, conexion, conn, teclado);
+    }
+
+       
+    @Override
+    public String ingresarCodigo(){        
+        System.out.print("USUARIO: ");
+        codigo = teclado.nextLine();
+        return codigo;
+    }
+    @Override
+    public String ingresarContraseña(){
+        System.out.print("CONTRASEÑA: ");
+        contraseña = teclado.nextLine();
+        return contraseña;
+    }
+    @Override
+    public boolean verificarCredenciales(){
         
         try {
             String sql = "SELECT * FROM CuentaPersonal WHERE codPers = ? AND contraseña = ?";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, usuario);
+            PreparedStatement ps = super.conn.prepareStatement(sql);
+            ps.setString(1, codigo);
             ps.setString(2, contraseña);
             ResultSet rs = ps.executeQuery();
             
@@ -40,18 +60,21 @@ public class LoginAdmin {
             conexion.cerrarConexion();
         }
     }
-    public void mostrarNombreAdmin(String usuario, String contraseña){
+    @Override
+    public void mostrarDatosLogin(){
         try {            
-            String sql = "SELECT p.nomPers FROM CuentaPersonal c LEFT JOIN Personal p ON"
+            String sql = "SELECT p.nomPers, p.apePatPers FROM CuentaPersonal c LEFT JOIN Personal p ON"
                 + " p.codPers = c.codPers WHERE c.codPers = ? AND c.contraseña = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, usuario);
+            ps.setString(1, codigo);
             ps.setString(2, contraseña);
             ResultSet rs = ps.executeQuery();
             
             if (rs.next()) {                
+                //ESTAS VARIABLES PUEDE PASAR A SER VARIABLES GENERALES PRIVADAS ARRIBA 
                 String nombre = rs.getString("nomPers");
-                System.out.println("bienvenido: " + nombre);
+                String apellido = rs.getString("apePatPers");
+                System.out.println("Bienvenido: " + nombre + " " + apellido);                
             }else{
                 System.out.println("error mostrar nombre");
             }
