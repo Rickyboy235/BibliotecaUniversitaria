@@ -8,6 +8,7 @@ import Credenciales.LoginUsuario;
 import InsercionSql.InsercionSolicitud;
 import VisualizacionSql.VisualizarMaterial;
 import VisualizacionSql.VisualizarServicio;
+import VisualizacionSql.VisualizarSolicitud;
 import VisualizacionSql.VisualizarUsuario;
 import com.mycompany.sp1.AudioLibro;
 import com.mycompany.sp1.Computadora;
@@ -345,9 +346,9 @@ public class menuUsuario {
                 }
             }
             case 3->{
-                //SE MOSTRARAN SU HISTORIAL DE SOLICITUDES EN LA BIBLIOTECA EN RELACION
-                //A SU CODIGO
-                //TAMBIEN DEBERIAMOS ALMACENAR SU CODIGO AL MOMENTO DE INICIAR SESION
+                VisualizarSolicitud vsol = new VisualizarSolicitud();
+                   Solicitud solicitud = new Solicitud();
+                   solicitud.mostrarHistorial(vsol.listHistorial(usuario));
             }
             case 4 ->{
                 /*int eleccionOpcion ;

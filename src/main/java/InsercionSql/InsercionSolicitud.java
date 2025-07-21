@@ -156,7 +156,7 @@ public class InsercionSolicitud {
     public void insertarSolResev(LoginUsuario logUsu){
         try {
             String sql = "INSERT INTO Solicitud (codSolicitud, codUsuario, codPers, tipoSolicitud, fechaSolicitud, "
-                    + "estadoSolicitud) VALUES (?, ?, 'por confirmar','prestamo', CURRENT_TIMESTAMP , ?)";
+                    + "estadoSolicitud) VALUES (?, ?, 'por confirmar','reserva', CURRENT_TIMESTAMP , ?)";
 
             PreparedStatement psSolicitud = conn.prepareStatement(sql);
             // Asignamos los valores

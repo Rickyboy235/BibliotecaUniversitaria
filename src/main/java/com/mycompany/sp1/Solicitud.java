@@ -23,7 +23,19 @@ public class Solicitud {
         String tipSol;
         String fecSol;
         String estSol;
+        
+        String custom1;
+        String custom2;
+        String custom3;
+        String custom4;
 
+    public Solicitud(String custom1, String custom2, String custom3, String custom4) {
+        this.custom1 = custom1;
+        this.custom2 = custom2;
+        this.custom3 = custom3;
+        this.custom4 = custom4;
+    }
+    
     public Solicitud() {
     }
 
@@ -90,6 +102,22 @@ public class Solicitud {
 
     public void setEstSol(String estSol) {
         this.estSol = estSol;
+    }
+    public void mostrarDatosHistorial(){
+        System.out.printf("| %-17s | %-43s | %-28s | %-10s |\n",
+                    custom1, custom2, custom3,custom4);
+    }
+    public void mostrarHistorial(ArrayList<Solicitud> listahisto){
+        System.out.println("-".repeat(151));
+        System.out.printf("| %-7s | %-17s | %-43s | %-28s | %-10s|\n",
+                   "Indice", "codigo","descripcion","tipo de material","fecha Solicitud");
+            System.out.println("-".repeat(151));
+            int contador = 1;
+            for (Solicitud solicitud : listahisto) {
+                System.out.printf("| %-7d ", contador++);
+                solicitud.mostrarDatosHistorial();
+        }
+            System.out.println("-".repeat(151));
     }
     public void mostrarDatos(){
         System.out.printf("| %-17s | %-33s | %-28s | %-10s | %-18s |\n",

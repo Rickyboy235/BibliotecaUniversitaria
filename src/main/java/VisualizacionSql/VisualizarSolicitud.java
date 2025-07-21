@@ -4,9 +4,12 @@
  */
 package VisualizacionSql;
 
+import Credenciales.LoginUsuario;
+import com.mycompany.sp1.Alumno;
 import com.mycompany.sp1.Solicitud;
 import conexion.CConexion;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -122,5 +125,45 @@ public class VisualizarSolicitud {
             conexion.cerrarConexion();
         }
         return listaReserva;
+    }
+    public ArrayList<Solicitud> listHistorial(LoginUsuario codUsu){
+        ArrayList<Solicitud> listaHistorial = new ArrayList<>();
+        try {
+            
+            String sql = "SELECT p.idPrestamo as custom1, b.titulo as custom2,m.tipoMaterial as custom3, "
+                    + "p.fecPrestamo as custom4 "
+                    + "FROM Prestamo p INNER JOIN Bibliografico b on b.codMaterial = p.codMaterial "
+                    + "INNER JOIN Material m on m.codMaterial = b.codMaterial "
+                    + "INNER JOIN Solicitud s on s.codSolicitud = p.idPrestamo "
+                    + "WHERE s.codUsuario = ? "
+                    + "UNION "
+                    + "SELECT p.idPrestamo as custom1, e.modelo as custom2,tipoMaterial as custom3, "
+                    + "p.fecPrestamo as custom4 FROM Prestamo p "
+                    + "INNER JOIN Electronico e on e.codMaterial = p.codMaterial "
+                    + "INNER JOIN Material m on m.codMaterial = e.codMaterial "
+                    + "INNER JOIN Solicitud s on s.codSolicitud = p.idPrestamo "
+                    + "WHERE s.codUsuario = ? "
+                    + "ORDER by p.fecPrestamo DESC";
+            PreparedStatement psHist = conn.prepareStatement(sql);
+            psHist.setString(1, codUsu.getCodigo());
+            psHist.setString(2, codUsu.getCodigo());
+            ResultSet rs = psHist.executeQuery();
+            while (rs.next()){
+                String custom1 = rs.getString("custom1");
+                String custom2 = rs.getString("custom2");
+                String custom3 = rs.getString("custom3");
+                String custom4 = rs.getString("custom4");
+                
+                //System.out.println("DEBUG: " + custom1 + " | " + custom2 + " | " + custom3 + " | " + custom4);
+                
+                Solicitud soli = new Solicitud(custom1, custom2, custom3, custom4);
+                listaHistorial.add(soli);
+            }
+        } catch (Exception e) {
+            System.out.println("error al obtener historial: " + e.getMessage());
+        } finally{
+            conexion.cerrarConexion();
+        }
+        return listaHistorial;
     }
 }
