@@ -4,6 +4,8 @@
  */
 package com.mycompany.sp1;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -56,5 +58,18 @@ public class Alumno extends Usuario {
         }
             System.out.println("-".repeat(151));
     }
+    public static Alumno fromResultSet(ResultSet rs) throws SQLException {
+          return new Alumno(
+                  rs.getString("codAlPre"),
+                  rs.getString("dniAlPre"),
+                  rs.getString("tipoUsuario"),
+                  rs.getString("nomAlPre"),
+                  rs.getString("apePatAlPre"),
+                  rs.getString("apeMatAlPre"),
+                  rs.getString("carrera"),
+                  rs.getString("corrAlPre"),
+                  rs.getString("telAlPre")
+          );
+        }
     }
 

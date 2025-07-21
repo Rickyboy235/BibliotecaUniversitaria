@@ -18,6 +18,7 @@ abstract class Material {
     /**
      * SUPERCLASE QUE SOLO SIRVE PARA CREAR JERARQUIA
      */
+    protected String codMaterial;
     protected String titulo;
     protected String autor;
     protected String idioma;
@@ -32,6 +33,55 @@ abstract class Material {
         this.idioma = idioma;
         this.añoPub = añoPub;
     }
+
+    public Material(String codMaterial, String titulo, String autor, String idioma, int añoPub) {
+        this.codMaterial = codMaterial;
+        this.titulo = titulo;
+        this.autor = autor;
+        this.idioma = idioma;
+        this.añoPub = añoPub;
+    }
+
+    public String getCodMaterial() {
+        return codMaterial;
+    }
+
+    public void setCodMaterial(String codMaterial) {
+        this.codMaterial = codMaterial;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public String getIdioma() {
+        return idioma;
+    }
+
+    public void setIdioma(String idioma) {
+        this.idioma = idioma;
+    }
+
+    public int getAñoPub() {
+        return añoPub;
+    }
+
+    public void setAñoPub(int añoPub) {
+        this.añoPub = añoPub;
+    }
+    
     public abstract void mostrarDatos();
 
     

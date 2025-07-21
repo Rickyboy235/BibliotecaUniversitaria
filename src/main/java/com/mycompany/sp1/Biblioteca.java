@@ -10,7 +10,7 @@ import Menus.MenuPrincipal;
  *
  * @author USER
  */
-public class Sp1 {
+public class Biblioteca {
 
     public static void main(String[] args) {
         MenuPrincipal mp = new MenuPrincipal();

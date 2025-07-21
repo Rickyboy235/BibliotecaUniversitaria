@@ -30,8 +30,10 @@ public class VisualizarSolicitud {
         ArrayList<Solicitud> listaSolicitudes = new ArrayList<>();
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT s.codSolicitud, s.codUsuario, "
-                    + "s.tipoSolicitud, s.fechaSolicitud, s.estadoSolicitud FROM Solicitud as s");
+            ResultSet rs = stmt.executeQuery("SELECT s.codSolicitud, s.codUsuario, s.tipoSolicitud, "
+                    + "m.codMaterial, m.tipoMaterial, s.fechaSolicitud, s.estadoSolicitud "
+                    + "FROM Solicitud s INNER JOIN Prestamo p ON p.idPrestamo = s.codSolicitud "
+                    + "INNER JOIN Material m ON m.codMaterial = p.codMaterial");
             while (rs.next()){
                 String codSol = rs.getString("codSolicitud");
                 String codUsu = rs.getString("codUsuario");

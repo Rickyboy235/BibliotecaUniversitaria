@@ -36,8 +36,7 @@ abstract class Usuario {
         this.correo = correo;
         this.dni = dni;
         this.tipoUsuario = tipoUsuario;
-    }
-    //TALVES NO SE DEBA CREAR CUENTAS PERO SI SE PUEDE MODIFICAR CONTRASEAS
+    }    
 
     public String getCodigo() {
         return codigo;

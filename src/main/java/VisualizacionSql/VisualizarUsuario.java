@@ -38,18 +38,8 @@ public class VisualizarUsuario {
                     + "INNER JOIN AlumnoPregrado a ON a.codAlPre = u.codUsuario "
                     + "WHERE u.tipoUsuario = 'Alumno Pregrado'");
             while (rs.next()){
-                String codAlu = rs.getString("codAlPre");
-                String dniAlu = rs.getString("dniAlPre");
-                String tipoAlu = rs.getString("tipoUsuario");
-                String nomAlu = rs.getString("nomAlPre");
-                String apPatAlu = rs.getString("apePatAlPre");
-                String apMatAlu = rs.getString("apeMatAlPre");
-                String carAlu = rs.getString("carrera");
-                String corrAlu = rs.getString("corrAlPre");
-                String telefAlu = rs.getString("telAlPre");
-                
-                Alumno alPre = new Alumno(codAlu, dniAlu, tipoAlu, nomAlu, apPatAlu, apMatAlu, carAlu, corrAlu, telefAlu);
-                listaAlumnos.add(alPre);
+                Alumno alumno = Alumno.fromResultSet(rs);
+                listaAlumnos.add(alumno);
                 
             }
         } catch (Exception e) {
@@ -68,19 +58,8 @@ public class VisualizarUsuario {
                     + "FROM Usuario u INNER JOIN AlumnoPostgrado a ON a.codAlPos = u.codUsuario "
                     + "WHERE u.tipoUsuario = 'Alumno Postgrado'");
             while (rs.next()){
-                String codAlu = rs.getString("codAlPos");
-                String dniAlu = rs.getString("dniAlPos");
-                String tipoAlu = rs.getString("tipoUsuario");
-                String nomAlu = rs.getString("nomAlPos");
-                String apPatAlu = rs.getString("apePatAlPos");
-                String apMatAlu = rs.getString("apeMatAlPos");                
-                String maesAlu = rs.getString("maestria");
-                String corrAlu = rs.getString("corrAlPos");
-                String telefAlu = rs.getString("telAlPos");
-                
-                AlumnoPostgrado alPre = new AlumnoPostgrado(codAlu, dniAlu, tipoAlu,
-                        nomAlu, apPatAlu, apMatAlu, maesAlu, corrAlu, telefAlu);
-                listaAlumnos.add(alPre);
+                AlumnoPostgrado aPostgrado = AlumnoPostgrado.fromResultSet(rs);
+                listaAlumnos.add(aPostgrado);
                 
             }
         } catch (Exception e) {
@@ -100,17 +79,7 @@ public class VisualizarUsuario {
                     + "FROM Usuario u INNER JOIN Docente d ON d.codDoc = u.codUsuario "
                     + "WHERE u.tipoUsuario = 'Docente'");
             while (rs.next()){
-                String codDoc = rs.getString("codDoc");
-                String dniDoc = rs.getString("dniDoc");
-                String nomDoc = rs.getString("nomDoc");
-                String apPatDoc = rs.getString("apePatDoc");
-                String apMatDoc = rs.getString("apeMatDoc");
-                String cursoDoc = rs.getString("curso");
-                String correoDoc = rs.getString("corrDoc");
-                String telDoc = rs.getString("telDoc");
-                
-                Docente docente = new Docente(codDoc, dniDoc, nomDoc,
-                apPatDoc, apMatDoc, cursoDoc, correoDoc, telDoc);
+                Docente docente = Docente.fromResultSet(rs);
                 listaDocentes.add(docente);
             }
         } catch (Exception e) {
@@ -119,7 +88,5 @@ public class VisualizarUsuario {
             conexion.cerrarConexion();
         }
         return listaDocentes;
-    }
-    
-    
+    }   
 }

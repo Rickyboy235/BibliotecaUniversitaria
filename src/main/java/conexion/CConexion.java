@@ -54,10 +54,10 @@ public class CConexion {
             if (conectar == null || conectar.isClosed()) { // ✅ solo abre si está cerrada
                 Class.forName("org.sqlite.JDBC");
                 conectar = DriverManager.getConnection(cadena);
-                System.out.println("✅ Conexión establecida.");
+                System.out.println("Conexión establecida.");
             }
         } catch (Exception e) {
-            System.out.println("❌ Error al conectar: " + e.getMessage());
+            System.out.println("Error al conectar: " + e.getMessage());
         }
         return conectar;
     }
@@ -66,10 +66,10 @@ public class CConexion {
         try {
             if (conectar != null && !conectar.isClosed()) {
                 conectar.close();
-                System.out.println("✅ Conexión cerrada.");
+                System.out.println("Conexión cerrada.");
             }
         } catch (Exception e) {
-            System.out.println("❌ Error al cerrar conexión: " + e.getMessage());
+            System.out.println("Error al cerrar conexión: " + e.getMessage());
         }
     }
 }

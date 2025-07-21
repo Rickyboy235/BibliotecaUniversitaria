@@ -4,6 +4,8 @@
  */
 package com.mycompany.sp1;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -102,13 +104,26 @@ public class DispositivoElectronico {
     }
     public void mostrarRegistros(ArrayList<DispositivoElectronico> listaDispElec){
         System.out.println("-".repeat(113));
-        System.out.printf("| %-10s | %-10s | %-28s | %-16s | %-6s | %-24s |\n",
-                    "TIPO DISP","MARCA","MODELO","TARJETA GRAFICA","RAM",
+        System.out.printf("| %-10s | %-10s | %-10s | %-28s | %-16s | %-6s | %-24s |\n",
+                    "INDICE","TIPO DISP","MARCA","MODELO","TARJETA GRAFICA","RAM",
                     "SIST. OPERATIVO");
             System.out.println("-".repeat(113));
+            int contador = 1;
             for (DispositivoElectronico dispElec : listaDispElec) {
+            System.out.printf("| %-10d ", contador++);
             dispElec.mostrarDatos();
         }
             System.out.println("-".repeat(113));
     }
+    public static DispositivoElectronico fromResultSet(ResultSet rs) throws SQLException {
+          return new DispositivoElectronico(
+                  rs.getString("codMaterial"),
+                  rs.getString("tipoDisp"),
+                  rs.getString("marca"),
+                  rs.getString("modelo"),
+                  rs.getString("tarjGrafica"),
+                  rs.getInt("RAM"),
+                  rs.getString("sistOperativo")
+          );
+        }
 }

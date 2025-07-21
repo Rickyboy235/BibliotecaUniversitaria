@@ -43,9 +43,8 @@ public void mostrarMenuPrincipal(){
                        MENU PRINCIPAL
                        1. gestionar materiales.
                        2. gestionar servicios.
-                       3. gestionar reservas 
-                       4. gestionar prestamos 
-                       5. gestionar penalidades
+                       3. gestionar reservas/prestamos
+                       4. gestionar penalidades
                        0. cerrar sesion.""");
             eleccion = teclado.nextInt();
         } while (eleccion != 1 && eleccion != 0);
@@ -65,10 +64,7 @@ public void mostrarMenuPrincipal(){
                 
             }
             case 4 ->{
-                
-            }
-            case 5 ->{
-                
+                            
             }
             case 0 ->{
                 

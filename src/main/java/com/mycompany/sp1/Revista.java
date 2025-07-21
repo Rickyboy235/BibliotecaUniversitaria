@@ -4,6 +4,8 @@
  */
 package com.mycompany.sp1;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -19,18 +21,24 @@ public class Revista extends Material{
 
     public Revista() {
     }
-
+    
     public Revista(int volumen, String editorial) {
         this.volumen = volumen;
         this.editorial = editorial;
     }
 
+    public Revista(String codMaterial, String titulo, String autor, int volumen, String idioma, String editorial, int añoPub) {
+        super(codMaterial, titulo, autor, idioma, añoPub);
+        this.volumen = volumen;
+        this.editorial = editorial;
+    }
+    
     public Revista(String titulo,String autor, int volumen, String idioma, String editorial, int añoPub) {
         super(titulo, autor, idioma, añoPub);
         this.volumen = volumen;
         this.editorial = editorial;
     }
-
+    
     public int getVolumen() {
         return volumen;
     }
@@ -55,13 +63,26 @@ public class Revista extends Material{
     }
     public void mostrarRegistros(ArrayList<Revista> listaRevistas){
         System.out.println("-".repeat(155));
-        System.out.printf("| %-33s | %-28s | %-10s | %-18s | %-32s | %-15s |\n",
-                    "TITULO","AUTOR","VOLUMEN","IDIOMA",
+        System.out.printf("| %-10s | %-33s | %-28s | %-10s | %-18s | %-32s | %-15s |\n",
+                    "INDICE","TITULO","AUTOR","VOLUMEN","IDIOMA",
                     "EDITORIAL","AÑO PUBLICACION");
             System.out.println("-".repeat(155));
+            int contador = 1;
             for (Revista revista : listaRevistas) {
+            System.out.printf("| %-10d ", contador++);
             revista.mostrarDatos();
         }
             System.out.println("-".repeat(155));
     }
+    public static Revista fromResultSet(ResultSet rs) throws SQLException {
+          return new Revista(
+                  rs.getString("codMaterial"),                  
+                  rs.getString("titulo"),
+                  rs.getString("autor"),
+                  rs.getInt("volumen"),
+                  rs.getString("idioma"),
+                  rs.getString("editorial"),
+                  rs.getInt("añoPubli")
+          );
+        }
 }

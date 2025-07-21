@@ -7,11 +7,14 @@ package Menus;
 import Credenciales.LoginUsuario;
 import InsercionSql.InsercionSolicitud;
 import VisualizacionSql.VisualizarMaterial;
+import VisualizacionSql.VisualizarServicio;
 import VisualizacionSql.VisualizarUsuario;
 import com.mycompany.sp1.AudioLibro;
+import com.mycompany.sp1.Computadora;
 import com.mycompany.sp1.DispositivoElectronico;
 import com.mycompany.sp1.Libro;
 import com.mycompany.sp1.Revista;
+import com.mycompany.sp1.Sala;
 import com.mycompany.sp1.Solicitud;
 import com.mycompany.sp1.Tesis;
 import com.mycompany.sp1.Video;
@@ -24,6 +27,7 @@ public class menuUsuario {
     private LoginUsuario usuario;
     private int eleccion;
     private int elecMaterial;
+    private int elecServicio;
     private Connection conn;
     
     
@@ -36,9 +40,10 @@ public class menuUsuario {
     public menuUsuario() {
     }
 
-    public menuUsuario(int eleccion, int elecMaterial) {
+    public menuUsuario(int eleccion, int elecMaterial,int elecServicio) {
         this.eleccion = eleccion;
         this.elecMaterial = elecMaterial;
+        this.elecServicio = elecServicio;
     }
     
     
@@ -51,7 +56,7 @@ public class menuUsuario {
                            Menu principal.
                            Ingrese la opcion que desee realizar.
                            1. visualizar catalogo.
-                           2. realizar solicitud.
+                           2. visualizar servicios.
                            3. ver historial.                           
                            0. cerrar sesion.""");
             //4. configuracion Cuenta
@@ -70,37 +75,187 @@ public class menuUsuario {
                         VisualizarMaterial vmat = new VisualizarMaterial();
                         Libro lib = new Libro();                        
                         lib.mostrarRegistros(vmat.listLibros());
+                        System.out.println("""
+                                           desea visualizar un Libro en especifico?
+                                           1. si.
+                                           2. no.""");
+                        int elecVisual = teclado.nextInt();
+                        if (elecVisual ==1) {
+                            Libro libroseleccionado = vmat.matSelecLibro(vmat.listLibros());
+                            
+                            //visualizar el libro que ingreso el usuario..
+                            System.out.println("""
+                                                    desea realizar el prestamo de este material?
+                                                    1. si
+                                                    2. no""");
+                            System.out.println("Código del material seleccionado: " + lib.getCodMaterial());
+                                 int elecPrest = teclado.nextInt();
+                                 if (elecPrest == 1) {
+                                 InsercionSolicitud isol = new InsercionSolicitud(conn);                                 
+                                 isol.insertarSolicitud(usuario);
+                                 isol.prestamoLibro(eleccion, libroseleccionado);
+                                 }else{
+                                     vmat.cerrarConexion();
+                                    banderaCatalogo = false;
+                                 }
+                        } else {    
+                          vmat.cerrarConexion();
                         banderaCatalogo = false;
+                        }
                     }
                     case 2 ->{
                         VisualizarMaterial vmat = new VisualizarMaterial();
-                        Revista rev = new Revista();
+                        Revista rev = new Revista();                        
                         rev.mostrarRegistros(vmat.listRevistas());
+                        System.out.println("""
+                                           desea visualizar una revista en especifico?
+                                           1. si.
+                                           2. no.""");
+                        int elecVisual = teclado.nextInt();
+                        if (elecVisual ==1) {
+                            Revista revistaSelec = vmat.matSelecRevista(vmat.listRevistas());                            
+                            //visualizar el libro que ingreso el usuario..
+                            System.out.println("""
+                                                    desea realizar el prestamo de este material?
+                                                    1. si
+                                                    2. no""");               
+                            System.out.println("Código del material seleccionado: " + rev.getCodMaterial());
+                                 int elecPrest = teclado.nextInt();
+                                 if (elecPrest == 1) {
+                                 InsercionSolicitud isol = new InsercionSolicitud(conn);                                 
+                                 isol.insertarSolicitud(usuario);
+                                 isol.prestamoRevista(eleccion, revistaSelec);
+                                 }else{
+                                     vmat.cerrarConexion();
+                                    banderaCatalogo = false;
+                                 }
+                        } else {    
+                          vmat.cerrarConexion();
                         banderaCatalogo = false;
+                        }
                     }
                     case 3 ->{
                         VisualizarMaterial vmat = new VisualizarMaterial();
-                        Tesis tes = new Tesis();
+                        Tesis tes = new Tesis();                                              
                         tes.mostrarRegistros(vmat.listTesis());
+                        System.out.println("""
+                                           desea visualizar una tesis en especifico?
+                                           1. si.
+                                           2. no.""");
+                        int elecVisual = teclado.nextInt();
+                        if (elecVisual ==1) {
+                            Tesis tesisSelec = vmat.matSelecTesis(vmat.listTesis());                            
+                            //visualizar el libro que ingreso el usuario..
+                            System.out.println("""
+                                                    desea realizar el prestamo de este material?
+                                                    1. si
+                                                    2. no""");  
+                            System.out.println("Código del material seleccionado: " + tes.getCodMaterial());
+                                 int elecPrest = teclado.nextInt();
+                                 if (elecPrest == 1) {
+                                 InsercionSolicitud isol = new InsercionSolicitud(conn);                                 
+                                 isol.insertarSolicitud(usuario);
+                                 isol.prestamoTesis(eleccion, tesisSelec);
+                                 }else{
+                                     vmat.cerrarConexion();
+                                    banderaCatalogo = false;
+                                 }
+                        } else {    
+                          vmat.cerrarConexion();
                         banderaCatalogo = false;
+                        }
                     }
                     case 4 ->{
                         VisualizarMaterial vmat = new VisualizarMaterial();
                         Video vid = new Video();
                         vid.mostrarRegistros(vmat.listVideos());
+                        System.out.println("""
+                                           desea visualizar un video en especifico?
+                                           1. si.
+                                           2. no.""");
+                        int elecVisual = teclado.nextInt();
+                        if (elecVisual ==1) {
+                            Video videoSelec = vmat.matSelecVideo(vmat.listVideos());                            
+                            //visualizar el libro que ingreso el usuario..
+                            System.out.println("""
+                                                    desea realizar el prestamo de este material?
+                                                    1. si
+                                                    2. no""");  
+                            System.out.println("Código del material seleccionado: " + vid.getCodMaterial());
+                                 int elecPrest = teclado.nextInt();
+                                 if (elecPrest == 1) {
+                                 InsercionSolicitud isol = new InsercionSolicitud(conn);                                 
+                                 isol.insertarSolicitud(usuario);
+                                 isol.prestamoVideo(eleccion, videoSelec);
+                                 }else{
+                                     vmat.cerrarConexion();
+                                    banderaCatalogo = false;
+                                 }
+                        } else {    
+                          vmat.cerrarConexion();
                         banderaCatalogo = false;
+                        }
                     }
                     case 5 ->{
                         VisualizarMaterial vmat = new VisualizarMaterial();
                         AudioLibro aLib = new AudioLibro();
                         aLib.mostrarRegistros(vmat.listALibro());
+                        System.out.println("""
+                                           desea visualizar un audiolibro en especifico?
+                                           1. si.
+                                           2. no.""");
+                        int elecVisual = teclado.nextInt();
+                        if (elecVisual ==1) {
+                            AudioLibro ALibroSelec = vmat.matSelecALibro(vmat.listALibro());                            
+                            System.out.println("""
+                                                    desea realizar el prestamo de este material?
+                                                    1. si
+                                                    2. no""");  
+                            System.out.println("Código del material seleccionado: " + aLib.getCodMaterial());
+                                 int elecPrest = teclado.nextInt();
+                                 if (elecPrest == 1) {
+                                 InsercionSolicitud isol = new InsercionSolicitud(conn);                                 
+                                 isol.insertarSolicitud(usuario);
+                                 isol.prestamoALibro(eleccion, ALibroSelec);
+                                 }else{
+                                     vmat.cerrarConexion();
+                                    banderaCatalogo = false;
+                                 }
+                        } else {    
+                          vmat.cerrarConexion();
                         banderaCatalogo = false;
+                        }
                     }
                     case 6 ->{
                         VisualizarMaterial vmat = new VisualizarMaterial();
                         DispositivoElectronico dispElect = new DispositivoElectronico();
-                        dispElect.mostrarRegistros(vmat.listDElec());
+                        dispElect.mostrarRegistros(vmat.listDElec());                        
+                        System.out.println("""
+                                           desea visualizar un dispositivo electronico en especifico?
+                                           1. si.
+                                           2. no.""");
+                        int elecVisual = teclado.nextInt();
+                        if (elecVisual ==1) {
+                            DispositivoElectronico DispElecSelec = vmat.matSelecDispElec(vmat.listDElec());                            
+                            
+                            System.out.println("""
+                                                    desea realizar el prestamo de este material?
+                                                    1. si
+                                                    2. no""");  
+                            System.out.println("Código del material seleccionado: " + dispElect.getCodMaterial());
+                                 int elecPrest = teclado.nextInt();
+                                 if (elecPrest == 1) {
+                                 InsercionSolicitud isol = new InsercionSolicitud(conn);                                 
+                                 isol.insertarSolicitud(usuario);
+                                 isol.prestamoDispElectronico(eleccion, DispElecSelec);
+                                 }else{
+                                     vmat.cerrarConexion();
+                                    banderaCatalogo = false;
+                                 }
+                        } else {    
+                          vmat.cerrarConexion();
                         banderaCatalogo = false;
+                        }
                     }
                     case 0 ->{
                         System.out.println("Regresando a Menu Principal");
@@ -114,25 +269,80 @@ public class menuUsuario {
                 }
             }
             case 2->{
-                int eleccionSolicitud;
-                realizarSolicitud();
-                eleccionSolicitud = teclado.nextInt();                                
-                InsercionSolicitud isol = new InsercionSolicitud(conn);                                
-                        isol.insertarSolicitud(usuario);
-                /*switch (eleccionSolicitud){
+                boolean banderaSol = true;
+                while(banderaSol){
+                int eleccionServ;
+                verServicios();
+                eleccionServ = teclado.nextInt();
+                switch(eleccionServ){
                     case 1 ->{
+                        VisualizarServicio vser = new VisualizarServicio();
+                        Sala sala = new Sala();
+                        sala.mostrarRegistro(vser.listSalas());
                         System.out.println("""
-                                           ingrese el tipo de material que desee prestarse
-                                           1. Libro
-                                           2. Revista
-                                           3. Tesis
-                                           4. Video
-                                           5. AudioLibro
-                                           """);
-                        int eleccionMaterial = teclado.nextInt();
+                                           esta interesado en alguna sala?
+                                           1. si.
+                                           2. no""");
+                        int elecVer = teclado.nextInt();
+                        if (elecVer == 1) {
+                            Sala salaSelecc = vser.matSelecSala(vser.listSalas());
+                            System.out.println("""
+                                               dese realizar la reserva de esta sala
+                                               1. si
+                                               2. no""");
+                            int elecRev = teclado.nextInt();
+                            if (elecRev == 1) {
+                                InsercionSolicitud isol = new InsercionSolicitud(conn);
+                                isol.insertarSolResev(usuario);
+                                isol.reservaSala(salaSelecc);
+                            }else{
+                                vser.cerrarConexion();
+                                banderaSol = false;
+                            }
+                        }else{
+                            vser.cerrarConexion();
+                                banderaSol = false;
+                        }
                         
                     }
-                }*/
+                    case 2 ->{
+                        VisualizarServicio vser = new VisualizarServicio();
+                        Computadora computadora = new Computadora();
+                        computadora.mostrarRegistro(vser.listComputadoras());
+                        System.out.println("""
+                                           esta interesado en alguna computadora?
+                                           1. si.
+                                           2. no""");
+                        int elecVer = teclado.nextInt();
+                        if (elecVer == 1) {
+                            Computadora compuSelecc = vser.matSelecComputadora(vser.listComputadoras());
+                            System.out.println("""
+                                               desea realizar la reserva de esta computadora?
+                                               1. si
+                                               2. no""");
+                            int elecRev = teclado.nextInt();
+                            if (elecRev == 1) {
+                                InsercionSolicitud isol = new InsercionSolicitud(conn);
+                                isol.insertarSolResev(usuario);
+                                isol.reservaComputadora(compuSelecc);
+                            }else{
+                                vser.cerrarConexion();
+                                banderaSol = false;
+                            }
+                        }else{
+                            vser.cerrarConexion();
+                                banderaSol = false;
+                        }
+                        
+                    }
+                    case 0 ->{
+                        banderaSol = false;                                              
+                    }
+                    default ->{
+                        System.out.println("error eleccion registro");
+                    }
+                }
+                }
             }
             case 3->{
                 //SE MOSTRARAN SU HISTORIAL DE SOLICITUDES EN LA BIBLIOTECA EN RELACION
@@ -169,20 +379,13 @@ public class menuUsuario {
                            6. Dispositivos Electronicos.
                            0. Atras.""");
     }
-    public void realizarSolicitud(){
-        System.out.println("""
-                           Crear Solicitud
-                           seleccione que tipo de solicitud desea realizar:
-                           1. prestamo.
-                           2. reserva.
-                           0. Atras""");
-    }
-    public void crearPrestamo(){
+    public void verServicios(){
         System.out.println("-".repeat(72));
         System.out.println("""
-                           Realizar Prestamo.
-                           Ingrese el nombre del material""");
-        String nombre = teclado.nextLine();
-    }     
+                           SERVICIOS
+                           1. Reserva de Salas de estudio.
+                           2. Rserva de Computadoras.
+                           0. Atras""");
+    }
     
 }

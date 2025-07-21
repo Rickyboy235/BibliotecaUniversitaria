@@ -72,7 +72,7 @@ public class MenuPrincipal {
                 }
 
                 case 3 -> {
-                    LoginPersonal LP1 = new LoginPersonal(); // ✅ pasa la conexión
+                    LoginPersonal LP1 = new LoginPersonal(conn); // ✅ pasa la conexión
                     LP1.ingresarCodigo();
                     LP1.ingresarContraseña();
                     boolean acceso = LP1.verificarCredenciales();

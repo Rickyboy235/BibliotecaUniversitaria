@@ -4,6 +4,8 @@
  */
 package com.mycompany.sp1;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -72,4 +74,16 @@ public class Docente extends Usuario {
         }
             System.out.println("-".repeat(151));
     }
+    public static Docente fromResultSet(ResultSet rs) throws SQLException {
+          return new Docente(
+                  rs.getString("codDoc"),
+                  rs.getString("dniDoc"),
+                  rs.getString("nomDoc"),
+                  rs.getString("apePatDoc"),
+                  rs.getString("apeMatDoc"),
+                  rs.getString("curso"),
+                  rs.getString("corrDoc"),
+                  rs.getString("telDoc")
+          );
+        }
 }

@@ -15,6 +15,11 @@ import java.util.Scanner;
  * @author ATKZ
  */
 public class LoginPersonal extends Login {
+    private Connection conn;
+
+    public LoginPersonal(Connection conn) {
+        this.conn = conn;
+    }
     
     public LoginPersonal() {
     }
@@ -48,19 +53,17 @@ public class LoginPersonal extends Login {
             ResultSet rs = ps.executeQuery();
             
             if (rs.next()) {
-                estado = true;
-                System.out.println("Inicio de sesion: " + rs.getString("tipoPers"));estado = true;
-                return estado;
-            }else{
-                estado = false;
-                System.out.println("Codigo o contraseña incorrecta.");
                 
-                return estado;
+                System.out.println("Inicio de sesion: " + rs.getString("tipoPers"));estado = true;
+                return true;
+            }else{                
+                System.out.println("Codigo o contraseña incorrecta.");                
+                return false;
             }
         } catch (Exception e) {
-            estado = false;
+            
             System.out.println("error login: " + e.getMessage());
-            return estado;
+            return false;
         } finally{
             conexion.cerrarConexion();
         }
@@ -75,8 +78,7 @@ public class LoginPersonal extends Login {
             ps.setString(2, contraseña);
             ResultSet rs = ps.executeQuery();
             
-            if (rs.next()) {      
-                //ESTAS VARIABLES PUEDE PASAR A SER VARIABLES GENERALES PRIVADAS ARRIBA 
+            if (rs.next()) {                       
                 String nombre = rs.getString("nomPers");
                 String apellido = rs.getString("apePatPers");
                 System.out.println("Bienvenido: " + nombre + " " + apellido);

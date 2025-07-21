@@ -4,6 +4,8 @@
  */
 package com.mycompany.sp1;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -100,12 +102,21 @@ public class Solicitud {
             System.out.println("-".repeat(151));
             int contador = 1;
             for (Solicitud solicitud : listaSolicitud) {
-                System.out.printf("| %-5d ", contador++);
+                System.out.printf("| %-7d ", contador++);
                 solicitud.mostrarDatos();
         }
             System.out.println("-".repeat(151));
     }
     
-        
+     public static Solicitud fromResultSet(ResultSet rs) throws SQLException {
+          return new Solicitud(
+                  rs.getString("codSolicitud"),
+                  rs.getString("codUsuario"),
+                  rs.getString("tipoSolicitud"),
+                  rs.getString("codMaterial"),
+                  rs.getString("tipoMaterial"),
+                  rs.getString("fechaSolicitud")
+          );
+        }   
 }
 
